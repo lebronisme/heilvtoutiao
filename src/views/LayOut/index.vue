@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view />
+    <router-view></router-view>
     <van-tabbar route>
       <van-tabbar-item replace to="/home" icon="home-o">
         首页
@@ -25,9 +25,12 @@
 export default {
   created () { },
   data () {
-    return {}
+    return {
+    }
   },
-  methods: {},
+  methods: {
+
+  },
   computed: {},
   watch: {},
   filters: {},
