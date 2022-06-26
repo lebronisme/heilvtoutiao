@@ -18,7 +18,7 @@
           },
         ]"
         ><template #left-icon>
-          <i class="toutiao toutiao-shouji"></i>
+          <HeilvIcon name="shouji"></HeilvIcon>
         </template>
       </van-field>
       <van-field
@@ -31,7 +31,7 @@
           { pattern: /^\d{6}$/, message: '验证码长度为6位' },
         ]"
         ><template #left-icon>
-          <i class="toutiao toutiao-yanzhengma"></i>
+          <HeilvIcon name="yanzhengma"></HeilvIcon>
         </template>
         <template #button>
           <van-count-down
@@ -109,9 +109,6 @@ export default {
 </script>
 
 <style scoped lang='less'>
-.toutiao {
-  font-size: 37px;
-}
 .yzm {
   width: 152px;
   height: 46px;

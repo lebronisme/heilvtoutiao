@@ -7,6 +7,8 @@ import 'vant/lib/index.less'
 import 'amfe-flexible'
 import '@/styles/icon.less'
 
+import HeilvIcon from '@/components/HeilvIcon.vue'
+Vue.component('HeilvIcon', HeilvIcon)
 Vue.use(Vant)
 Vue.config.productionTip = false
 
