@@ -35,6 +35,7 @@
         <p>登录/注册</p>
       </div>
     </div>
+    <!-- 固定的页面 -->
     <van-grid :column-num="2">
       <van-grid-item text="收藏">
         <template #icon>
