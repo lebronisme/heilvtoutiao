@@ -5,7 +5,8 @@ import store from './store'
 import Vant from 'vant'
 import 'vant/lib/index.less'
 import 'amfe-flexible'
-import '@/styles/icon.less'
+
+import '@/styles/index.less'
 
 import HeilvIcon from '@/components/HeilvIcon.vue'
 Vue.component('HeilvIcon', HeilvIcon)

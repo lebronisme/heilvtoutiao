@@ -1,11 +1,12 @@
 <template>
   <div>
-    <van-nav-bar title="登录">
+    <van-nav-bar title="登录" @click-left="$router.go(-1)">
       <template #left>
         <van-icon name="cross" />
       </template>
     </van-nav-bar>
     <van-form @submit="onSubmit" ref="form">
+      <!-- //手机输入框 -->
       <van-field
         v-model="mobile"
         name="mobile"
@@ -21,16 +22,17 @@
           <HeilvIcon name="shouji"></HeilvIcon>
         </template>
       </van-field>
+      <!-- 验证码输入框 -->
       <van-field
         v-model.trim="code"
-        type="password"
         name="code"
         placeholder="验证码"
         :rules="[
           { required: true, message: '请填写验证码' },
           { pattern: /^\d{6}$/, message: '验证码长度为6位' },
         ]"
-        ><template #left-icon>
+      >
+        <!-- 最左侧的icon小图标 --><template #left-icon>
           <HeilvIcon name="yanzhengma"></HeilvIcon>
         </template>
         <template #button>
@@ -50,6 +52,7 @@
           >
         </template>
       </van-field>
+      <!-- 提交button按钮 -->
       <div style="margin: 16px">
         <van-button round block class="login-btn" native-type="submit"
           >提交</van-button
@@ -77,6 +80,7 @@ export default {
       try {
         const res = await login(values)
         this.$store.commit('setUser', res.data.data)
+        this.$router.push({ name: 'my' })
       } catch (err) {
         console.log(err)
       }
