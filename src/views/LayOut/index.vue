@@ -1,6 +1,10 @@
 <template>
   <div>
-    <router-view class="main"></router-view>
+    <!-- 加上keep-alive，保证切换走再切换回来不会重新加载 -->
+    <keep-alive :include="['Home']">
+      <router-view class="main"></router-view>
+    </keep-alive>
+
     <van-tabbar route>
       <van-tabbar-item replace to="/home" icon="home-o">
         首页
