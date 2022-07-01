@@ -50,7 +50,9 @@
 </template>
 
 <script>
-import { getAllChannels } from '@/api/home'
+import { getAllChannels, saveChannels } from '@/api/home'
+import { setItem } from '@/utils/storage'
+const CHANNELS = 'CHANNELS'
 export default {
   props: {
     channels: {
@@ -91,6 +93,8 @@ export default {
     // 给inner绑定点击事件，当标签是完成和编辑状态的时候，都可以进行操作，传入的index为当前被操作项的索引值
     onClick (index) {
       if (this.isCloseShow) {
+        // 如果当前处于  推荐的频道上，即index=0的频道上，不会进行删除操作
+        if (index === 0) return
         // 如果处于编辑状态，进行删除功能
         const arr = this.channels[index]
         this.channels.splice(index, 1)
@@ -106,7 +110,30 @@ export default {
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+    channels: {
+      // 如果已经登录，数据就放在服务器是上，未登录就放在本地
+      async handler (newval) {
+        if (this.$store.state.user && this.$store.state.user.token) {
+          // 已经登录的情况
+          const arr = []
+          newval.forEach((item, index) => arr.push({
+            id: item.id, seq: index
+          }))
+          console.log(arr)
+          // 获取数据之后，调用saveChannels函数，发送Ajax请求，把处理好的数据发送给后台进行修改
+          try {
+            const res = await saveChannels(arr)
+            console.log(res)
+          } catch (err) { console.log(err) }
+        } else {
+          // 未登录的情况
+          setItem(CHANNELS, newval)
+        }
+      },
+      deep: true
+    }
+  },
   filters: {},
   components: {}
 }

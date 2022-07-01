@@ -2,7 +2,11 @@
   <div>
     <van-cell-group>
       <!-- 实现下拉刷新的效果 -->
-      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+      <van-pull-refresh
+        v-model="refreshing"
+        @refresh="onRefresh"
+        ref="pullrefresh"
+      >
         <!-- list加载更多组件 -->
         <van-list
           v-model="loading"
@@ -11,15 +15,19 @@
           @load="onLoad"
         >
           <!-- 首页的十条渲染数据 -->
-          <van-cell
+          <ArticleItem
+            v-for="(item, index) in artList"
+            :key="index"
+            :article="item"
+          ></ArticleItem>
+          <!-- <van-cell
             :title="item.title"
             value="内容"
             :label="item.pubdate"
             v-for="(item, index) in artList"
             :key="index"
           >
-            <van-cell v-for="item in list" :key="item" :title="item" />
-          </van-cell>
+          </van-cell> -->
         </van-list>
       </van-pull-refresh>
     </van-cell-group>
@@ -28,12 +36,27 @@
 
 <script>
 import { getArtList } from '@/api/home'
+import ArticleItem from './ArticleItem.vue'
+let ele = null
+let scrollTop = 0
 export default {
   props: {
     id: {
       type: Number,
       requried: true
     }
+  },
+  mounted () {
+    // 给有滚动条的pull-refresh绑定滚动时间   在滚动的时候记住最新的滚动位置
+    ele = this.$refs.pullrefresh.$el
+    // $el就是把组件解析成元素,$el就是渲染好的根标签。dom元素才可以绑定监听事件
+    this.$refs.pullrefresh.$el.addEventListener('scroll', function () {
+      scrollTop = this.scrollTop
+    })
+  },
+  activated () {
+    // 每次进入home的时候，把滚动条从最上面滚动到上一次记录的位置（keep-alive自带，因为设置了缓存，所以不会重新加载）
+    ele.scrollTop = scrollTop
   },
   created () {
     this.getArtListFn()
@@ -64,7 +87,7 @@ export default {
           this.finished = true
         }
         this.artList.push(...res.data.data.results)
-        // 划到底部时，loading状态切换为true，加载状态出现。不写这步，加载状态就一直存在
+        // 划到底部时，loading状态切换为false，加载状态出现。不写这步，加载状态就一直存在
         this.loading = false
       } catch (err) {
         console.log(err)
@@ -88,7 +111,7 @@ export default {
   computed: {},
   watch: {},
   filters: {},
-  components: {}
+  components: { ArticleItem }
 }
 </script>
 

@@ -44,6 +44,8 @@
 import ArtList from '@/components/ArtList.vue'
 import ChannelPannel from './components/ChannelPannel.vue'
 import { getMyChannels } from '@/api/home'
+import { getItem } from '@/utils/storage'
+const CHANNELS = 'CHANNELS'
 export default {
   name: 'Home',
   created () {
@@ -58,17 +60,26 @@ export default {
   },
   methods: {
     async getMyChannelsFn () {
-      try {
-        const res = await getMyChannels()
-        console.log('res', res)
-        this.channels = res.data.data.channels
-      } catch (err) {
-        console.log('err', err)
+      const channels = getItem(CHANNELS)
+      // 如果未登录但是本地存储有数据，就从本地拿数据
+      if (!(this.$store.state.user && this.$store.state.user.token) && channels) {
+        this.channels = channels
+      } else {
+        // 登录过后，或者本地无数据，就直接去Ajax拿数据
+        try {
+          const res = await getMyChannels()
+          console.log('res', res)
+          this.channels = res.data.data.channels
+        } catch (err) {
+          console.log('err', err)
+        }
       }
     }
   },
   computed: {},
-  watch: {},
+  watch: {
+
+  },
   filters: {},
   components: { ArtList, ChannelPannel }
 }

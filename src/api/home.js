@@ -19,3 +19,14 @@ export const getAllChannels = () => {
     url: '/channels'
   })
 }
+
+// 登录之后的频道数据持久化
+export const saveChannels = (channels) => {
+  return request({
+    method: 'PUT',
+    url: '/channels',
+    data: {
+      channels
+    }
+  })
+}
