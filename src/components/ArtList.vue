@@ -49,7 +49,7 @@ export default {
   mounted () {
     // 给有滚动条的pull-refresh绑定滚动时间   在滚动的时候记住最新的滚动位置
     ele = this.$refs.pullrefresh.$el
-    // $el就是把组件解析成元素,$el就是渲染好的根标签。dom元素才可以绑定监听事件
+    // $el就是把组件解析成元素,$el就是当前组件的根标签。dom元素才可以绑定监听事件
     this.$refs.pullrefresh.$el.addEventListener('scroll', function () {
       scrollTop = this.scrollTop
     })

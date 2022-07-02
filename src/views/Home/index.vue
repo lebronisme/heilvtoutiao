@@ -2,7 +2,11 @@
   <div>
     <van-nav-bar fixed>
       <template #title
-        ><van-button type="default" icon="search" class="search-btn"
+        ><van-button
+          type="default"
+          icon="search"
+          class="search-btn"
+          to="/search"
           >搜索</van-button
         >
       </template>
@@ -77,9 +81,6 @@ export default {
     }
   },
   computed: {},
-  watch: {
-
-  },
   filters: {},
   components: { ArtList, ChannelPannel }
 }
