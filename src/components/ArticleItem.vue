@@ -1,5 +1,14 @@
 <template>
-  <van-cell class="article-item">
+  <van-cell
+    class="article-item"
+    @click="
+      $router.push({ name: 'article', params: { article_id: article.art_id } })
+    "
+  >
+    <!-- // $router.push('article/110')
+// $router.push('{path:article/110}')
+// $router.push({ name: 'article', params: { article_id: 110 } })
+// 推荐使用第三种 -->
     <div slot="title" class="title van-multi-ellipsis--l2">
       {{ article.title }}
     </div>
@@ -40,7 +49,9 @@ export default {
     }
   },
   data () {
-    return {}
+    return {
+
+    }
   },
   computed: {},
   watch: {},

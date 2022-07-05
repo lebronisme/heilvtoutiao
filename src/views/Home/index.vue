@@ -72,7 +72,6 @@ export default {
         // 登录过后，或者本地无数据，就直接去Ajax拿数据
         try {
           const res = await getMyChannels()
-          console.log('res', res)
           this.channels = res.data.data.channels
         } catch (err) {
           console.log('err', err)

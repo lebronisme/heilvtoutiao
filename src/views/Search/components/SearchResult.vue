@@ -1,12 +1,5 @@
 <template>
   <div class="container">
-    <!-- <van-cell-group>
-      <van-cell
-        :value="item.title"
-        v-for="(item, index) in searchResult"
-        :key="index"
-      />
-    </van-cell-group> -->
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list
         v-model="loading"
@@ -54,7 +47,7 @@ export default {
           this.finished = true
           return
         }
-        this.searchResult = [...res.data.data.results]
+        this.searchResult.push(...res.data.data.results)
         // 加载状态结束
         this.loading = false
         // 下拉刷新执行结束后，将其设置为true

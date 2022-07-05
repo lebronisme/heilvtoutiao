@@ -79,7 +79,7 @@ export default {
       }
       try {
         const res = await getArtList({ channel_id: this.id, timestamp: this.timestamp })
-        console.log('getArtList', res)
+        // console.log('getArtList', res)
         this.timestamp = res.data.data.pre_timestamp
 
         // 若数据已全部加载完毕，则直接将 finished 设置成 true 即可
