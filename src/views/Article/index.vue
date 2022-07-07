@@ -61,6 +61,10 @@
             type="a"
             @setCount="count = $event"
             :commentList="commentList"
+            @reply-show="
+              isreplyShow = true;
+              comments = $event;
+            "
           ></ArticleComment>
         </div>
         <!-- /加载完成-文章详情 -->
@@ -125,6 +129,19 @@
         "
       ></AddComment>
     </van-popup>
+    <!-- 点击回复评论之后的弹出层 -->
+    <van-popup
+      v-model="isreplyShow"
+      position="bottom"
+      :style="{ height: '100%' }"
+    >
+      <ReplyComment
+        v-if="isreplyShow"
+        :comments="comments"
+        @closePopup="isreplyShow = false"
+      ></ReplyComment>
+      <!-- 组件默认使用v-show，数据不会自动刷新，要让他每次打开的时候都重新渲染 -->
+    </van-popup>
   </div>
 </template>
 
@@ -135,9 +152,10 @@ import { getArtList } from '@/api/article'
 import AddComment from './components//AddComment.vue'
 import { ImagePreview } from 'vant'
 import ArticleComment from './components/ArticleComment.vue'
+import ReplyComment from './components/ReplyComment.vue'
 export default {
   name: 'ArticleIndex',
-  components: { ArticleComment, AddComment },
+  components: { ArticleComment, AddComment, ReplyComment },
   props: {
     article_id: {
       type: [Number, String],
@@ -150,6 +168,7 @@ export default {
       article: {},
       is404Error: false,
       showShare: false,
+      isreplyShow: false,
       options: [
         { name: '微信', icon: 'wechat' },
         { name: '微博', icon: 'weibo' },
@@ -159,7 +178,8 @@ export default {
       ],
       count: null,
       isCommentShow: false,
-      commentList: []
+      commentList: [],
+      comments: {}
     }
   },
   computed: {},

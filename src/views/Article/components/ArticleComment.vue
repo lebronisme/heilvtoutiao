@@ -9,6 +9,7 @@
       v-for="(item, index) in commentList"
       :key="index"
       :item="item"
+      @reply-show="$emit('reply-show', $event)"
     ></CommentItem>
   </van-list>
 </template>
